@@ -5,6 +5,7 @@ import PostCard from '@/components/PostCard'
 import { Button } from '@/components/ui/button'
 import { SignInButton, useUser } from '@clerk/nextjs'
 import { format } from 'date-fns'
+import Image from 'next/image'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -65,41 +66,59 @@ const ProfilePageClient = ({isFollowing:initialIsFollowing,likedPosts,posts,user
     const formattedDate = format(new Date(user.createdAt), "MMMM yyyy");
   return (
     <div>
-        {user.name ?? user.username}
-        @{user.username}
-        {user.bio}
+<div className='mb-5'>
 
+      <div className='h-[200px] overflow-hidden mb-3'>
+        <Image src={"/default-background.jpg"} alt='background' width={999} height={100}/>
+      </div>
+      <div className='flex justify-between'>
+        <div>
+      <p className='text-[var(--text-color)] text-4xl font-bold'>
+         {user.name ?? user.username}
+      </p>
+       <p className='text-[var(--secondary-text)] text-xl'>
+        @{user.username}
+        </p>
+        {user.bio}
+        </div>
+        <div>
+          <Image className='rounded-md' src={user.image ?? 'default-avatar.png'} alt='Avatar' width={80} height={80}/>
+        </div>
+
+        </div>
+        <div className='flex gap-3'>
+
+        <p className='text-[var(--text-color)] text-sm'>
 
         {user._count.following.toLocaleString()} Following
+        </p>
+        <p className='text-[var(--text-color)] text-sm' >
 
         {user._count.followers.toLocaleString()} Followers
+        </p>
+<p className='text-[var(--text-color)] text-sm'>
 
         {user._count.posts.toLocaleString()} Posts
-
-        {/* {!mainUser ? (
-            <SignInButton>
-                <Button>Follow</Button>
-            </SignInButton>
-        ): isOwnProfile ? (
-            <Button onClick={()=>setShowEditDialog(true)}>Edit Profile</Button>
-        ):(
-            <Button>{isFollowing ? "Unfollow" : "Follow"}</Button>
-        )} */}
+</p>
+<p className='text-[var(--btn-color)] text-sm'>
 
         {`Joined ${formattedDate}`}
+</p>
+        </div>
+</div>
 
-        <h2>Posts</h2>
+        <h2 className='text-2xl text-[var(--text-color)] font-bold'>Posts: </h2>
         {posts.length > 0 ? (
             posts.map((post)=> <PostCard key={post.id} post={post} dbUserId={mainUser?.id ?? null}/>)
         ) : (
-            <div>No posts yet...</div>
+            <div className='text-2xl text-[var(--text-color)] font-bold'>No posts yet...</div>
         )}
 
-        <h2>Liked Posts</h2>
+        <h2 className='text-2xl text-[var(--text-color)] font-bold'>Liked Posts</h2>
         {likedPosts.length>0?(
             likedPosts.map((post)=><PostCard key={post.id} post={post} dbUserId={mainUser?.id ?? null}/>)
         ): (
-            <div>No liked posts to show...</div>
+            <div className='text-2xl text-[var(--text-color)] font-bold'>No liked posts to show...</div>
         )}
     </div>
   )

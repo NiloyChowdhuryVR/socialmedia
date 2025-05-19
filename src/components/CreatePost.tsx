@@ -63,7 +63,7 @@ const CreatePost = () => {
 
       <Textarea
       ref={textareaRef}
-        placeholder="What's on your fucking mind?"
+        placeholder="What's on your mind?"
         value={content}
         onChange={handleInput}
         disabled={isPosting}
