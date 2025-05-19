@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Navbar from "@/components/Navbar";
+import { Toaster } from "react-hot-toast";
+import Sidebar from "@/components/Sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,13 +28,24 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-
+      <Toaster/>
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <Navbar/>
+          <div className="flex justify-center">
+
+          <div className="flex w-[90%] gap-3">
+          <Sidebar/>
+          <div className="flex-1 p-6 bg-pink-300">
         {children}
+          </div>
+          <div className="sidebar w-[250px] bg-green-300">
+            <p>hiiiii</p>
+          </div>
+          </div>
+          </div>
       </body>
     </html>
         </ClerkProvider>
