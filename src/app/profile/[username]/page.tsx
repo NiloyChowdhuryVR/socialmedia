@@ -9,7 +9,7 @@ import {
 import { getDbUserId, getUserByClerkId } from "@/actions/user.action";
 import { auth } from "@clerk/nextjs/server";
   
-  export async function generateMetadata({ params }: { params: { username: string } }) {
+  export async function generateMetadata({ params }: { params: Promise<{ username: string }>  }) {
     const resolvedParams = await params;
     const user = await getProfileByUsername(resolvedParams.username);
     if (!user) return;
@@ -20,7 +20,7 @@ import { auth } from "@clerk/nextjs/server";
     };
   }
   
-  async function ProfilePageServer({ params }: { params: { username: string } }) {
+  async function ProfilePageServer({ params }: { params:  Promise<{ username: string }>  }) {
     const resolvedParams = await params;
     const user = await getProfileByUsername(resolvedParams.username);
   
