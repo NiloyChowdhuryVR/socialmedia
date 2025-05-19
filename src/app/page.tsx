@@ -32,7 +32,7 @@ const page = async() => {
   return (
     <>
     <div>
-      {user ? <CreatePost/> : "Login to post"}
+      <CreatePost/>
     </div>
     <div>
       <Feed/>

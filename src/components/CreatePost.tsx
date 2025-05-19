@@ -8,10 +8,11 @@ import toast from "react-hot-toast";
 import ImageUpload from "./ImageUpload";
 import Image from "next/image";
 import { Link } from "lucide-react";
+import { Skeleton } from "./ui/skeleton";
 // import { UploadDropzone } from '../utils/uploadthing';
 
 const CreatePost = () => {
-  const { user } = useUser();
+  const { user , isLoaded} = useUser();
   const [content, setContent] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [isPosting, setIsPosting] = useState(false);
@@ -19,9 +20,15 @@ const CreatePost = () => {
   const [imageUploaded, setImageUploaded] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  if(!user) return(
-    <div>Login to Post</div>
-  )
+
+if (!isLoaded) return (
+  <div>
+    <Skeleton className="w-[100px] h-[20px] rounded-full my-2" />
+          <Skeleton className="w-[70px] h-[20px] rounded-full my-2" />
+          <Skeleton className="w-full h-[20px] rounded-full my-2" />
+  </div>
+);
+if (!user) return <div className="text-3xl text-[var(--text-color)]"> Loginnnnn to Post</div>;
 
   const handleSubmit = async () => {
     if (!content.trim() && !imageUrl) return;
@@ -81,7 +88,7 @@ const CreatePost = () => {
           <Link />
         </Button>
       )}
-      <Button onClick={handleSubmit} disabled={!content} className="rounded-none rounded-r-xl bg-[var(--btn-color)] text-[var(--bg-color)] hover:bg-[var(--btn-hover)] cursor-pointer">POST</Button>
+      <Button onClick={handleSubmit} disabled={!content && !imageUploaded} className="rounded-none rounded-r-xl bg-[var(--btn-color)] text-[var(--bg-color)] hover:bg-[var(--btn-hover)] cursor-pointer">POST</Button>
       </div>
       </div>
       {(showImageUpload || imageUrl) && (

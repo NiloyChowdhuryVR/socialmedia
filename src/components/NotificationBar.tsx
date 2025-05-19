@@ -50,7 +50,12 @@ const getNotificationIcon = (type: string) => {
   }, []);
   if(!user.user) return null;
   
-  if (isLoading) return (
+  
+
+
+  return (
+    <div className='rightbar w-[300px] bg-[var(--primary-color)] rounded-xl p-5'>
+      {(isLoading)?(
     <div className='sidebar w-[300px] bg-[var(--primary-color)] rounded-xl p-5 h-screen'>
       <Skeleton className="w-[100px] h-[20px] rounded-full my-2" />
       <Skeleton className="w-[70px] h-[20px] rounded-full my-2" />
@@ -69,18 +74,15 @@ const getNotificationIcon = (type: string) => {
       <Skeleton className="w-[100px] h-[20px] rounded-full my-2" />
       
     </div>
-  );
-
-
-  return (
-    <div className='sidebar w-[300px] bg-[var(--primary-color)] rounded-xl p-5'>
-        <h2 className='text-[var(--text-color)] font-semibold'>Notifications</h2>
+  ):(
+  <>
+  <h2 className='text-[var(--text-color)] font-semibold'>Notifications</h2>
         <span className='text-[var(--text-color)] text-sm'>{notifications.filter((n)=>!n.read).length} unread</span>
         {notifications.length === 0? (
-            <div className='text-[var(--text-color)]'>No notifications yet</div>
+          <div className='text-[var(--text-color)]'>No notifications yet</div>
         ): (
-            notifications.map((notification)=>(
-                <div key={notification.id} className='py-3 border-t-white border-t'>
+          notifications.map((notification)=>(
+            <div key={notification.id} className='py-3 border-t-white border-t'>
                                <p className="text-sm text-[var(--secondary-text)] text-right">
                       {formatDistanceToNow(new Date(notification.createdAt), { addSuffix: true })}
                     </p>
@@ -98,9 +100,9 @@ const getNotificationIcon = (type: string) => {
                             <p className='text-[var(--text-color)]'>{notification.post.content}</p>
                             {notification.post.image && (
                               <img
-                                src={notification.post.image}
-                                alt="Post content"
-                                className="mt-2 rounded-md w-full max-w-[130px] h-auto object-cover"
+                              src={notification.post.image}
+                              alt="Post content"
+                              className="mt-2 rounded-md w-full max-w-[130px] h-auto object-cover"
                               />
                             )}
                           </div>
@@ -115,6 +117,8 @@ const getNotificationIcon = (type: string) => {
 
                 </div>
             ))
+          )}
+          </>
         )}
     </div>
   )

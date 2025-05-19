@@ -28,9 +28,11 @@ const WhoToFollow = async() => {
             <Link  href={`/profile/${user.username}`}>
                 <p className='text-[var(--text-color)] text-xs'>{user.name}</p>
             </Link>
-            <Link  href={`/profile/${user.username}`}>
-                <p className='text-[var(--secondary-text)] text-xs'>@{user.username}</p>
-            </Link>
+<Link href={`/profile/${user.username}`}>
+  <p className='text-[var(--secondary-text)] text-xs'>
+    @{user.username.length > 10 ? `${user.username.slice(0, 7)}...` : user.username}
+  </p>
+</Link>
               </div>
                 <div className='mt-2'>
                 <FollowButton userId={user.id}/>

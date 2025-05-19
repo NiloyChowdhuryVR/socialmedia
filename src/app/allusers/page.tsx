@@ -9,10 +9,11 @@ const page = async() => {
     const allUsers = await getAllUsers();
 
   return (
-    <div>
+    <div className='flex flex-col items-center gap-0'>
         {allUsers?.map((user)=>(
-            <div key={user.id} className='bg-[var(--bg-color)] rounded-xl p-2 my-3'>
-              <div className='flex gap-3 items-center'>
+            <div key={user.id} className='bg-[var(--primary-color)] rounded-xl p-2 my-1 w-[200px]'>
+              <div className='flex gap-3 items-center justify-between'>
+<div className='flex gap-3 items-center'>
 
               <div>
                 <Link href={`/profile/${user.username}`}>
@@ -23,9 +24,12 @@ const page = async() => {
             <Link  href={`/profile/${user.username}`}>
                 <p className='text-[var(--text-color)] text-xs'>{user.name}</p>
             </Link>
-            <Link  href={`/profile/${user.username}`}>
-                <p className='text-[var(--secondary-text)] text-xs'>@{user.username}</p>
-            </Link>
+  <Link href={`/profile/${user.username}`}>
+  <p className=' text-[var(--secondary-text)] text-xs'>
+    @{user.username.length > 10 ? `${user.username.slice(0, 7)}...` : user.username}
+  </p>
+</Link>
+        </div>
               </div>
                 <div className='mt-2'>
                 <FollowButton userId={user.id}/>

@@ -138,6 +138,18 @@
   }
 }
 
+.rightbar {
+  display: none; /* hidden by default */
+}
+
+/* Show rightbar on screens >= 1024px (larger than iPad) */
+@media (min-width: 1024px) {
+  .rightbar {
+    display: block;
+  }
+}
+
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

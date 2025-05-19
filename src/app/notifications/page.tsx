@@ -3,6 +3,9 @@ import { getNotifications, markNotificationsAsRead } from '@/actions/notificatio
 import { formatDistanceToNow } from 'date-fns';
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
+import ModeCommentIcon from '@mui/icons-material/ModeComment';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
 
 type Notifications = Awaited<ReturnType<typeof getNotifications>>;
 type Notification = Notifications[number];
@@ -10,11 +13,11 @@ type Notification = Notifications[number];
 const getNotificationIcon = (type: string) => {
   switch (type) {
     case "LIKE":
-      return <p>LIKED</p>;
+      return <FavoriteIcon className='text-[var(--btn-color)]'/>;
     case "COMMENT":
-      return <p>commented</p>;
+      return <ModeCommentIcon className='text-[var(--btn-color)]'/>;
       case "FOLLOW":
-          return <p>Followed</p>;
+          return <ShareIcon className='text-[var(--btn-color)]'/>;
           default:
               return null;
             }
@@ -48,44 +51,46 @@ const getNotificationIcon = (type: string) => {
 
   return (
     <div>
-        <h2>Notifications</h2>
-        <span>{notifications.filter((n)=>!n.read).length} unread</span>
+        <h2 className='text-[var(--text-color)] text-2xl font-semibold'>Notifications</h2>
+        <span  className='text-[var(--secondary-text)] '>{notifications.filter((n)=>!n.read).length} unread</span>
         {notifications.length === 0? (
-            <div>No notifications yet</div>
+            <div className='text-[var(--secondary-text)]'>No notifications yet</div>
         ): (
             notifications.map((notification)=>(
-                <div key={notification.id}>
-                    {getNotificationIcon(notification.type)}
-                    <span>{notification.creator.name ?? notification.creator.username}</span>{" "}
-                    {notification.type === "FOLLOW" ? "Started following you" : notification.type === "LIKE" ? " Liked your post" : "Commented on your post!"}
-                    
-
-                    {notification.post &&
-                      (notification.type === "LIKE" || notification.type === "COMMENT") && (
-                        <div className="pl-6 space-y-2">
-                          <div className="text-sm text-muted-foreground rounded-md p-2 bg-muted/30 mt-2">
-                            <p>{notification.post.content}</p>
-                            {notification.post.image && (
-                              <img
-                                src={notification.post.image}
-                                alt="Post content"
-                                className="mt-2 rounded-md w-full max-w-[200px] h-auto object-cover"
-                              />
-                            )}
-                          </div>
-
-                          {notification.type === "COMMENT" && notification.comment && (
-                            <div className="text-sm p-2 bg-accent/50 rounded-md">
-                              {notification.comment.content}
-                            </div>
-                          )}
-                               <p className="text-sm text-muted-foreground pl-6">
-                      {formatDistanceToNow(new Date(notification.createdAt), { addSuffix: true })}
-                    </p>
-                        </div>
-                      )}
-
-                </div>
+                           <div key={notification.id} className='py-3 border-t-white border-t'>
+                                               <p className="text-sm text-[var(--secondary-text)] text-right">
+                                      {formatDistanceToNow(new Date(notification.createdAt), { addSuffix: true })}
+                                    </p>
+                                    {getNotificationIcon(notification.type)}
+                                    <span className='text-[var(--text-color)]'>{notification.creator.name ?? notification.creator.username}</span>{" "}
+                                    <span className='text-[var(--secondary-text)]'>
+                                      {notification.type === "FOLLOW" ? "Started following you" : notification.type === "LIKE" ? " Liked your post" : "Commented on your post!"}
+                                      </span>
+                                    
+                
+                                    {notification.post &&
+                                      (notification.type === "LIKE" || notification.type === "COMMENT") && (
+                                        <div className="flex flex-col w-full">
+                                          <div className="text-sm rounded-md px-2 my-2">
+                                            <p className='text-[var(--text-color)]'>{notification.post.content}</p>
+                                            {notification.post.image && (
+                                              <img
+                                              src={notification.post.image}
+                                              alt="Post content"
+                                              className="mt-2 rounded-md w-full max-w-[130px] h-auto object-cover"
+                                              />
+                                            )}
+                                          </div>
+                
+                                          {notification.type === "COMMENT" && notification.comment && (
+                                            <div className="text-sm p-2 bg-[var(--bg-color)] text-[var(--text-color)] rounded-md mb-1 ">
+                                              {notification.comment.content}
+                                            </div>
+                                          )}
+                                        </div>
+                                      )}
+                
+                                </div>
             ))
         )}
     </div>
