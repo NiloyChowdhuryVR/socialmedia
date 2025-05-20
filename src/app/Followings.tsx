@@ -29,7 +29,18 @@ const Followings = async({userId}:{userId:string}) => {
     
 
   return (
-    <div>
+    <div>{
+      followingsWithFollowStatus.length === 0? (
+        <div className='text-[var(--secondary-text)] text-lg font-semibold text-center mt-30'>
+          <p>
+            You do not have any Followings currently!
+            </p>
+            <p className='text-sm'>
+              Follow someone to add them here
+            </p>
+        </div>
+      ): null
+      }
         <div className='flex flex-col items-center gap-0'>
         {followingsWithFollowStatus?.map((user)=>(
             <div key={user.id} className='bg-[var(--primary-color)] rounded-xl p-2 my-1 w-[200px]'>
