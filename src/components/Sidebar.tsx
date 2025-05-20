@@ -14,22 +14,19 @@ const Sidebar = async() => {
 
 
   const dbUser = await currentUser();
-  if(!dbUser) return(
-    <div>Please Login to view</div>
-  )
   
-
+  if(!dbUser) return null;
   const user = await getUserByClerkId(dbUser.id);
-
+  
   if(!user) redirect('/');
 
   return (
-    <div className='sidebar w-[250px] bg-[var(--bg-color)]'>
+    (<div className='sidebar w-[250px] bg-[var(--bg-color)]'>
         <SidebarClient user={user}/>
         <div >
           <WhoToFollow/>
         </div>
-    </div>
+    </div>)
   )
 }
 
