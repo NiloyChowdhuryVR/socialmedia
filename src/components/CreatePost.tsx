@@ -66,18 +66,22 @@ if (!user) return <div className="text-3xl text-[var(--text-color)]"> Loginnnnn 
   return (
     <>
     <div className="p-5 bg-[var(--primary-color)] rounded-t-xl flex justify-center items-center gap-5">
+    
       <Image src={user?.imageUrl} alt="Avatar" width={40} height={40} className="rounded-[50%] "/>
+<div className="flex-1 flex flex-col gap-5">
 
       <Textarea
       ref={textareaRef}
-        placeholder="What's on your mind?"
-        value={content}
-        onChange={handleInput}
-        disabled={isPosting}
-        
-        className="bg-[var(--bg-color)] text-[var(--text-color)] resize-none no-scrollbar focus:ring-1 focus:ring-[var(--custom-color)]"
-        />
-<div className="flex">
+      placeholder="What's on your mind?"
+      value={content}
+      onChange={handleInput}
+      disabled={isPosting}
+      
+      className="bg-[var(--bg-color)] text-[var(--text-color)] resize-none no-scrollbar focus:ring-1 focus:ring-[var(--custom-color)]"
+      />
+
+        {/* THE ATTACTHMENT AND POST BUTTONS  */}
+<div className="flex ">
 
       {imageUploaded ? null : (
         <Button
@@ -88,7 +92,8 @@ if (!user) return <div className="text-3xl text-[var(--text-color)]"> Loginnnnn 
           <Link />
         </Button>
       )}
-      <Button onClick={handleSubmit} disabled={!content && !imageUploaded} className="rounded-none rounded-r-xl bg-[var(--btn-color)] text-[var(--bg-color)] hover:bg-[var(--btn-hover)] cursor-pointer">POST</Button>
+      <Button onClick={handleSubmit} disabled={!content && !imageUploaded} className="rounded-none rounded-r-xl bg-[var(--btn-color)] text-[var(--bg-color)] hover:bg-[var(--btn-hover)] cursor-pointer mb-3">POST</Button>
+      </div>
       </div>
       </div>
       {(showImageUpload || imageUrl) && (
