@@ -7,7 +7,7 @@ import { Toaster } from "react-hot-toast";
 import Sidebar from "@/components/Sidebar";
 import WhoToFollow from "@/components/WhoToFollow";
 import NotificationBar from "@/components/NotificationBar";
-
+import { dark, neobrutalism, shadesOfPurple } from '@clerk/themes'
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -29,7 +29,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+        appearance={{
+        baseTheme: [dark, neobrutalism],
+        variables: { colorPrimary: 'blue' },
+        signIn: {
+          baseTheme: [shadesOfPurple],
+          variables: { colorPrimary: 'green' },
+        },
+      }}
+    >
       <Toaster/>
     <html lang="en">
       <body

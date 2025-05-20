@@ -84,6 +84,7 @@
   --text-color: #fff;
   --secondary-text: #808080;
 }
+
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }

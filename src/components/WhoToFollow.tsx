@@ -4,18 +4,31 @@ import { Button } from './ui/button';
 import FollowButton from './FollowButton';
 import Link from 'next/link';
 import Image from 'next/image';
+import { isFollowing } from '@/actions/profile.action';
 
 const WhoToFollow = async() => {
 
     const users = await getRandomUsers();
+    if(!users) return null;
     if(users?.length===0) return null;
+
+
+      const usersWithFollowStatus = await Promise.all(
+    users.map(async (user) => {
+      const following = await isFollowing(user.id);
+      return {
+        ...user,
+        isFollowing: following,
+      };
+    })
+  );
 
   return (
     <div className='sidebar w-[95%] bg-[var(--primary-color)] mx-auto rounded-xl p-5'>
       <p className='text-[var(--text-color)] font-semibold'>  
         Follow Them:
       </p>
-        {users?.map((user)=>(
+        {usersWithFollowStatus?.map((user)=>(
             <div key={user.id} className='bg-[var(--bg-color)] rounded-xl p-2 my-3'>
               <div className='flex gap-3 items-center justify-between px-2'>
 
@@ -35,7 +48,7 @@ const WhoToFollow = async() => {
 </Link>
               </div>
                 <div className='mt-2'>
-                <FollowButton userId={user.id}/>
+                <FollowButton userId={user.id} isFollowing={user.isFollowing}/>
                 </div>
               </div>
             </div>

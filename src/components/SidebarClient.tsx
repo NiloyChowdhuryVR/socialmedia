@@ -46,8 +46,10 @@ const SidebarClient = ({user}:{user:SidebarUser}) => {
 {/* THIS IS THE USER INFO SECTION (IMAGE, FOLLOWER, FOLLOWING) */}
           <div className='flex flex-row justify-center items-center gap-3 text-sm py-2'>
             <div className='text-center'>
+              <Link href={`/follow/${user.id}`}>
               <h2 className='font-bold text-[var(--text-color)] '>{user?._count.followers}</h2>
               <p className='text-[var(--secondary-text)] font-bold'>Followers</p>
+              </Link>
             </div>
             <div className=''>
               <Link href={`/profile/${user?.username}`}>
@@ -55,8 +57,10 @@ const SidebarClient = ({user}:{user:SidebarUser}) => {
               </Link>
             </div>
             <div className='text-center'>
+              <Link href={`/follow/${user.id}`}>
               <h2 className='font-bold text-[var(--text-color)] '>{user?._count.following}</h2>
               <p className='text-[var(--secondary-text)] font-bold'>Following</p>
+              </Link>
             </div>
           </div>
 {/* THIS IS NAME USERNAME BIO SECTION  */}

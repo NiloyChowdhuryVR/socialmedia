@@ -152,40 +152,55 @@ try {
 }
 }
 
-export const getAllUsers = async()=>{
-    try {
-        const userId = await getDbUserId();
+export const getAllUsers = async () => {
+  try {
+    const userId = await getDbUserId();
 
-        if(!userId) return[];
+    if (!userId) return [];
 
-        const allUsers = await prisma.user.findMany({
-            where:{
-                AND:[
-                    {NOT:{id:userId}},
-                    {NOT:{
-                        followers:{
-                            some:{
-                                followerId:userId
-                            }
-                        }
-                    }}
-                ]
-            },
-            select:{
-                id:true,
-                name:true,
-                username:true,
-                image:true,
-                _count:{
-                    select:{
-                        followers:true
-                    }
-                }
-            }
-        })
-        return allUsers;
+    const allUsers = await prisma.user.findMany({
+      where: {
+        NOT: { id: userId },  // exclude yourself only
+      },
+      select: {
+        id: true,
+        name: true,
+        username: true,
+        image: true,
+        _count: {
+          select: {
+            followers: true,
+          },
+        },
+      },
+    });
 
-    } catch (error) {
-        console.log("Can't get all users")
-    }
-}
+    return allUsers;
+  } catch (error) {
+    console.log("Can't get all users");
+  }
+};
+
+export const getUserById = async (userId: string) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      include: {
+        _count: {
+          select: {
+            followers: true,
+            following: true,
+            posts: true,
+          },
+        },
+      },
+    });
+
+    return user;
+  } catch (error) {
+    console.log("Error fetching user by ID:", error);
+    return null;
+  }
+};
