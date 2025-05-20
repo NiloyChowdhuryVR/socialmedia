@@ -65,9 +65,9 @@ if (!user) return <div className="text-3xl text-[var(--text-color)]"> Loginnnnn 
   };
   return (
     <>
-    <div className="p-5 bg-[var(--primary-color)] rounded-t-xl flex justify-center items-center gap-5">
+    <div className="p-5 bg-[var(--primary-color)] rounded-t-xl flex justify-center items-start gap-5">
     
-      <Image src={user?.imageUrl} alt="Avatar" width={40} height={40} className="rounded-[50%] "/>
+      <Image src={user?.imageUrl} alt="Avatar" width={40} height={40} className="rounded-[50%] mt-3"/>
 <div className="flex-1 flex flex-col gap-5">
 
       <Textarea
@@ -92,7 +92,7 @@ if (!user) return <div className="text-3xl text-[var(--text-color)]"> Loginnnnn 
           <Link />
         </Button>
       )}
-      <Button onClick={handleSubmit} disabled={!content && !imageUploaded} className="rounded-none rounded-r-xl bg-[var(--btn-color)] text-[var(--bg-color)] hover:bg-[var(--btn-hover)] cursor-pointer mb-3">POST</Button>
+      <Button onClick={handleSubmit} disabled={!content && !imageUploaded} className="rounded-none rounded-r-xl bg-[var(--btn-color)] text-[var(--bg-color)] hover:bg-[var(--btn-hover)] cursor-pointer">POST</Button>
       </div>
       </div>
       </div>
@@ -102,7 +102,7 @@ if (!user) return <div className="text-3xl text-[var(--text-color)]"> Loginnnnn 
             <img
             src={imageUrl}
             alt="Preview"
-            className="w-48 h-48 object-cover rounded"
+            className="w-48 h-48 mb-3 object-cover rounded"
             />
           )}
           <ImageUpload onUploadComplete={handleImageUpload} />
